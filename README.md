@@ -82,10 +82,11 @@ node server/license-server.js create lifetime     # 本地发一张终身码
 
 ## 上架流程（详见 store/ 下文档）
 
-1. `store/privacy-policy.md` 部署成公开 HTTPS 页面，拿到 URL
+1. ~~隐私政策部署~~ → **已上线：https://liuxing5.github.io/web-crawler-ext/**
+   （源文件 `docs/index.html`，仓库 https://github.com/liuxing5/web-crawler-ext）
 2. `node tools/build.js` 生成三个 zip
-3. Chrome：devconsole 上传 chrome zip（$5），文案抄 `store/chrome-listing.md`，
-   审核备注抄 `store/review-notes.md`，隐私 URL 填第 1 步
+3. Chrome：按 `store/submit-chrome.md` 逐步提交（文案抄 `chrome-listing.md`，
+   审核备注抄 `review-notes.md`）
 4. Edge：partner dashboard 上传 edge zip（免费），权限说明抄 `store/edge-listing.md`
 5. Firefox：addons.mozilla.org 上传 firefox zip
 6. 过审后按 `store/monetization.md` 接入收款 + 填 `LICENSING.endpoint/buyUrl`

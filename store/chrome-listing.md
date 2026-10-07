@@ -9,7 +9,7 @@
 |---|---|
 | 类目 Category | Entertainment |
 | 语言 | 中文（默认）+ English |
-| 隐私政策 URL | 部署 `store/privacy-policy.md` 后的公开链接 |
+| 隐私政策 URL | https://liuxing5.github.io/web-crawler-ext/ （已上线） |
 | Single purpose 说明 | （见下方“审核说明”原文） |
 
 **Single purpose description（必填，逐字用）：**
