@@ -102,6 +102,19 @@ All settings — enabled toggle, spider count, skin, speed/size, sound toggle & 
 左侧栏底部 Settings 齿轮 → Contact email 填真实邮箱 → Save →
 去邮箱点 Google 验证邮件里的 Verify 链接 → 回后台确认已验证。
 
+**Privacy policy URL（Privacy 页底部，0/2048 带 \*）：**
+`https://liuxing5.github.io/web-crawler-ext/`
+
+**I certify 三条声明：** 全部勾选（do not sell/transfer、unrelated purposes、
+creditworthiness）。上方数据收集类复选框（PII/位置/浏览历史/网站内容等）
+**全部保持不勾**——扩展不收集任何数据。
+
+**Test instructions → Additional instructions（可选，审核友好）：**
+
+```
+No account or setup required. Steps: (1) install; (2) open any http/https page (e.g. https://example.com); (3) click the toolbar icon — the spider walks onto the page immediately; (4) in the popup, switch Mode to "Walk + Virus" to see time-limited effects that restore automatically. Everything works offline, no login.
+```
+
 全部消除后 Save draft → Submit for review 变蓝可提交。
 
 ## 通过之后
