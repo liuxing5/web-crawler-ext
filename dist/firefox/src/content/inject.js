@@ -29,7 +29,7 @@
   }
 
   function teardown() {
-    if (engine) { engine.stop(); engine = null; }
+    if (engine) { engine.stop(); engine = null; if (self.WCEngine) self.WCEngine.engine = null; }
     if (corruptor) { corruptor.stop(true); corruptor = null; }
     if (audio) audio.suspend();      // 停用 / 排除 → 挂起音频上下文，绝对安静且省电
   }
@@ -38,7 +38,7 @@
     current = WC.normalize(WC.copy(raw || {}, WC.clone(WC.DEFAULTS)));
     if (!shouldRun(current)) { teardown(); return; }
     if (audio) audio.configure(current.sound, current.volume);   // 音效开关与音量实时生效
-    if (!engine) { engine = new Engine(current); engine.mount(); }
+    if (!engine) { engine = new Engine(current); engine.mount(); if (self.WCEngine) self.WCEngine.engine = engine; }
     engine.sync(current);
     if (current.mode === 'virus') {
       if (!corruptor) corruptor = new Corruptor();

@@ -362,9 +362,29 @@
     this.raf = 0;
     this.last = 0;
     this.view = { scrollX: 0, scrollY: 0 };
+    this.userHoldUntil = 0;      // 此时刻之前：用户正在滚动，引擎不抢滚动条
+    this._lastSx = null;         // 帧末的页面滚动位置，用来识别“引擎之外”的滚动
+    this._lastSy = null;
     this._onResize = this.resize.bind(this);
     this._onFrame = this.frame.bind(this);
+    this._onUserAct = this.userActivity.bind(this);
+    this._onUserKey = this.userScrollKey.bind(this);
   }
+
+  /* 用户主动滚动（滚轮 / 触摸 / 滚动键）→ 让出自动跟随 2.6 秒 */
+  Engine.prototype.userActivity = function () {
+    this.userHoldUntil = performance.now() + 2600;
+  };
+
+  Engine.prototype.userScrollKey = function (e) {
+    switch (e.key) {
+      case ' ': case 'Spacebar':
+      case 'PageDown': case 'PageUp':
+      case 'ArrowDown': case 'ArrowUp':
+      case 'Home': case 'End':
+        this.userActivity();
+    }
+  };
 
   Engine.prototype.mount = function () {
     if (this.canvas) return;
@@ -378,6 +398,9 @@
     this.g = c.getContext('2d');
     this.resize();
     window.addEventListener('resize', this._onResize, { passive: true });
+    window.addEventListener('wheel', this._onUserAct, { passive: true, capture: true });
+    window.addEventListener('touchmove', this._onUserAct, { passive: true, capture: true });
+    window.addEventListener('keydown', this._onUserKey, { passive: true, capture: true });
     this.start();
   };
 
@@ -404,6 +427,9 @@
     this.canvas = null;
     this.g = null;
     window.removeEventListener('resize', this._onResize);
+    window.removeEventListener('wheel', this._onUserAct, { capture: true });
+    window.removeEventListener('touchmove', this._onUserAct, { capture: true });
+    window.removeEventListener('keydown', this._onUserKey, { capture: true });
     this.spiders = [];
   };
 
@@ -459,6 +485,12 @@
 
     var sx = window.scrollX || window.pageXOffset || 0;
     var sy = window.scrollY || window.pageYOffset || 0;
+
+    /* 引擎之外发生的滚动（用户滚轮 / 滚动条拖拽 / 页面脚本）→ 让出跟随 2.6 秒，
+     * 期间 follow 视为关闭：蜘蛛改为贴边夹持，滚动完全交给用户 */
+    if (this._lastSy !== null && (sx !== this._lastSx || sy !== this._lastSy)) {
+      this.userHoldUntil = ts + 2600;
+    }
     this.view.scrollX = sx;
     this.view.scrollY = sy;
 
@@ -468,14 +500,19 @@
       vh: window.innerHeight,
       scrollX: sx,
       scrollY: sy,
-      follow: !!this.settings.follow,
+      follow: !!this.settings.follow && ts >= this.userHoldUntil,
       scrollBy: function (dx, dy) {
-        window.scrollBy(dx, dy);
+        try { window.scrollBy({ left: dx, top: dy, behavior: 'instant' }); }
+        catch (err) { window.scrollBy(dx, dy); }
         return window.scrollY || window.pageYOffset || 0;
       }
     };
 
     for (var i = 0; i < this.spiders.length; i++) this.spiders[i].update(dt, ctx);
+
+    /* 记录帧末滚动位置（含引擎本帧 scrollBy 的结果），供下帧识别“引擎之外”的滚动 */
+    this._lastSx = window.scrollX || window.pageXOffset || 0;
+    this._lastSy = window.scrollY || window.pageYOffset || 0;
 
     var g = this.g;
     if (!g) return;
