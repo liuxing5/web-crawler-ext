@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Web Crawler — 隐私政策 / Privacy Policy</title>
+<style>
+  :root { color-scheme: light dark; }
+  body { margin: 0; padding: 40px 20px 80px; background: #fff; color: #1a1f2e;
+         font: 16px/1.75 -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; }
+  main { max-width: 760px; margin: 0 auto; }
+  h1 { font-size: 28px; margin-bottom: 4px; }
+  h2 { font-size: 20px; margin-top: 36px; border-left: 4px solid #43e8ff; padding-left: 10px; }
+  .meta { color: #667; font-size: 14px; }
+  .divider { margin: 48px 0 8px; border: 0; border-top: 2px dashed #d5dbe8; }
+  .en { color: #333; }
+  code { background: #f0f3f8; padding: 1px 6px; border-radius: 4px; font-size: 14px; }
+  footer { margin-top: 56px; font-size: 13px; color: #889; border-top: 1px solid #e4e8f0; padding-top: 16px; }
+  @media (prefers-color-scheme: dark) {
+    body { background: #12151d; color: #dbe2f2; }
+    .meta, footer { color: #8892a8; }
+    code { background: #1d2230; }
+    .en { color: #c3cbdd; }
+    footer { border-color: #262c3a; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <h1>Web Crawler 隐私政策</h1>
+  <div class="meta">Privacy Policy · 最后更新 / Last updated：2026-10-07 · 适用版本：1.0.0</div>
+
+  <h2>概述</h2>
+  <p>Web Crawler（以下简称“本扩展”）是一款娱乐性质的浏览器扩展：在网页上绘制会爬行的机械蜘蛛动画，
+  可选地对页面元素做限时的视觉“感染”效果并自动还原。我们重视您的隐私，本扩展
+  <strong>不收集、不上传、不出售</strong>任何个人数据。</p>
+
+  <h2>我们访问的数据</h2>
+  <p><strong>1. 本地存储（chrome.storage.local）</strong></p>
+  <p>本扩展仅在浏览器本地存储：您的设置（开关、蜘蛛数量、速度、皮肤、音效、病毒效果参数等）、
+  您选择排除的域名列表、您主动输入的授权码及其校验结果。这些数据只保存在您的浏览器中，
+  卸载扩展即删除；不与任何第三方共享。</p>
+  <p><strong>2. 网络访问</strong></p>
+  <ul>
+    <li>内容脚本会在您访问的 http/https 页面上运行，用于绘制画布动画和（在开启“病毒模式”时）
+        修改页面元素的内联样式。<strong>页面内容不会被读取或发送到任何服务器。</strong></li>
+    <li>仅当您在设置中<strong>主动输入并验证授权码</strong>时，扩展会向授权服务器发送：授权码、
+        匿名随机设备标识符（用于限制一张码的激活设备数）、产品名与版本号。
+        除此之外，扩展不发起任何网络请求。</li>
+    <li>音效、动画均在本地实时合成与渲染，不加载任何远程资源。</li>
+  </ul>
+  <p><strong>3. 我们不做的事</strong></p>
+  <ul>
+    <li>不收集姓名、邮箱、浏览历史、IP 或任何可识别信息</li>
+    <li>不使用广告 SDK、分析 SDK、像素追踪或指纹识别</li>
+    <li>不访问标签页内容、剪贴板、Cookie 或表单数据</li>
+    <li>不出售或共享数据（因为我们根本没有收集数据）</li>
+  </ul>
+
+  <h2>支付</h2>
+  <p>购买 Pro 授权码通过站外支付平台（例如 Stripe / Paddle / Lemon Squeezy）完成。
+  支付页面、支付信息与收据均由该平台处理，本扩展开发者不会看到您的完整卡号。</p>
+
+  <h2>政策变更</h2>
+  <p>如有重大变更，将在本页面更新“最后更新”日期并随扩展版本说明。</p>
+
+  <h2>联系方式</h2>
+  <p>问题请发送至：<strong><a href="https://github.com/liuxing5" rel="noopener">github.com/liuxing5</a></strong>（GitHub Issues）</p>
+
+  <hr class="divider">
+
+  <div class="en">
+    <h1 style="font-size:24px">Privacy Policy (English)</h1>
+    <h2>Overview</h2>
+    <p>Web Crawler is an entertainment browser extension: it draws animated mechanical
+    spiders crawling over web pages and, optionally, applies time-limited visual
+    “corruption” to page elements that automatically restores itself.
+    This extension <strong>does not collect, upload, or sell any personal data</strong>.</p>
+    <h2>Data we access</h2>
+    <p><strong>1. Local storage (<code>chrome.storage.local</code>)</strong> — only your
+    settings, your per-site exclusion list, and the license key you voluntarily enter
+    plus its verification result. Stored locally; deleted on uninstall; never shared.</p>
+    <p><strong>2. Network access</strong> — content scripts run on the pages you visit
+    solely to draw the canvas animation and (when virus mode is on) modify inline
+    styles; <strong>page content is never read or transmitted</strong>. The only network
+    request is the optional license verification (license key, random anonymous device
+    id, product name, version) triggered when you voluntarily submit a key. Animation
+    and sound are synthesized locally; no remote resources are loaded.</p>
+    <p><strong>3. What we do NOT do</strong> — no collection of identifying data, no
+    advertising/analytics/tracking/fingerprinting, no access to tab contents,
+    clipboard, cookies or form data, no sale or sharing of data.</p>
+    <h2>Payments</h2>
+    <p>Pro license keys are purchased through an external payment provider
+    (e.g. Stripe / Paddle / Lemon Squeezy); the developer never sees your full
+    card number.</p>
+    <h2>Changes &amp; Contact</h2>
+    <p>Material changes update the “Last updated” date above. Contact:
+    <strong>[your email]</strong> / <strong>[your site]</strong>.</p>
+  </div>
+
+  <footer>
+    本页面为 Web Crawler 浏览器扩展的公开隐私政策，供 Chrome Web Store /
+    Microsoft Edge Add-ons / Firefox Add-ons 审核与用户查阅。
+  </footer>
+</main>
+</body>
+</html>

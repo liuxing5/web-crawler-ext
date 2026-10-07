@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Web Crawler — 设置</title>
+<link rel="stylesheet" href="options.css">
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <img src="../../icons/icon128.png" alt="">
+    <div>
+      <h1 data-i18n="extName"></h1>
+      <p data-i18n="optSub"></p>
+    </div>
+    <span id="tierBadge" class="badge free">FREE</span>
+  </header>
+
+  <nav class="tabs">
+    <button class="on" data-tab="general" data-i18n="optTabGeneral"></button>
+    <button data-tab="virus" data-i18n="optTabVirus"></button>
+    <button data-tab="sites" data-i18n="optTabSites"></button>
+    <button data-tab="license" data-i18n="optTabLicense"></button>
+    <button data-tab="about" data-i18n="optTabAbout"></button>
+  </nav>
+
+  <!-- 常规 -->
+  <section class="panel on" data-panel="general">
+    <div class="card">
+      <div class="row">
+        <div><b data-i18n="uiEnable"></b><small data-i18n="optEnableDesc"></small></div>
+        <label class="switch"><input type="checkbox" id="enabled"><span class="track"></span></label>
+      </div>
+      <div class="row">
+        <div><b data-i18n="uiSpiders"></b><small id="countHint"></small></div>
+        <div class="stepper"><button id="minus">−</button><b id="count">1</b><button id="plus">+</button></div>
+      </div>
+      <div class="row">
+        <div><b data-i18n="uiSpeed"></b><small data-i18n="optSpeedDesc"></small></div>
+        <div class="seg" id="speed">
+          <button data-v="0.6" data-i18n="uiSlow"></button>
+          <button data-v="1" data-i18n="uiMid"></button>
+          <button data-v="1.5" data-i18n="uiFast"></button>
+        </div>
+      </div>
+      <div class="row">
+        <div><b data-i18n="uiMode"></b><small data-i18n="optModeDesc"></small></div>
+        <div class="seg" id="mode">
+          <button data-v="walk" data-i18n="uiWalk"></button>
+          <button data-v="virus" data-i18n="uiVirus"></button>
+        </div>
+      </div>
+      <div class="row">
+        <div><b data-i18n="optScale"></b><small data-i18n="optScaleDesc"></small></div>
+        <input type="range" id="scale" min="0.6" max="1.8" step="0.1">
+      </div>
+      <div class="row">
+        <div><b data-i18n="optFollow"></b><small data-i18n="optFollowDesc"></small></div>
+        <label class="switch"><input type="checkbox" id="follow"><span class="track"></span></label>
+      </div>
+      <div class="row">
+        <div><b data-i18n="optTrail"></b><small data-i18n="optTrailDesc"></small></div>
+        <label class="switch"><input type="checkbox" id="trail"><span class="track"></span></label>
+      </div>
+      <div class="row">
+        <div><b data-i18n="optSound"></b><small data-i18n="optSoundDesc"></small></div>
+        <label class="switch"><input type="checkbox" id="sound"><span class="track"></span></label>
+      </div>
+      <div class="row">
+        <div><b data-i18n="optVolume"></b><small id="volumeHint"></small></div>
+        <input type="range" id="volume" min="0" max="1" step="0.05">
+      </div>
+      <div class="row">
+        <div><b data-i18n="uiSkin"></b><small data-i18n="optSkinDesc"></small></div>
+        <div class="skins" id="skins"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 病毒效果 -->
+  <section class="panel" data-panel="virus">
+    <div class="card">
+      <div class="note" data-i18n="optVirusNote"></div>
+      <div class="row">
+        <div><b data-i18n="optDuration"></b><small id="durationHint"></small></div>
+        <input type="range" id="duration" min="1500" max="60000" step="500">
+      </div>
+      <div class="row">
+        <div><b data-i18n="optRadius"></b><small id="radiusHint"></small></div>
+        <input type="range" id="radius" min="60" max="800" step="20">
+      </div>
+      <div class="row">
+        <div><b data-i18n="optVirusRestore"></b><small data-i18n="optVirusRestoreDesc"></small></div>
+        <button id="restoreNow" class="btn" data-i18n="optRestoreNow"></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 排除网站 -->
+  <section class="panel" data-panel="sites">
+    <div class="card">
+      <div class="note" data-i18n="optSitesNote"></div>
+      <ul id="exList" class="list"></ul>
+      <div class="empty" id="exEmpty" data-i18n="optNoExcluded"></div>
+      <div class="addRow">
+        <input id="exInput" type="text" placeholder="example.com" spellcheck="false">
+        <button id="exAdd" class="btn" data-i18n="optAddSite"></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 授权 -->
+  <section class="panel" data-panel="license">
+    <div class="card">
+      <div class="row">
+        <div><b data-i18n="optLicenseStatus"></b><small id="licDesc"></small></div>
+        <span id="licBadge" class="badge free">FREE</span>
+      </div>
+      <div class="addRow">
+        <input id="key" type="text" placeholder="WC-XXXX-XXXX-XXXX" spellcheck="false" autocomplete="off">
+        <button id="verify" class="btn primary" data-i18n="uiVerify"></button>
+      </div>
+      <div class="msg" id="licMsg"></div>
+      <div class="row">
+        <div><b data-i18n="optDeviceId"></b><small id="deviceId" class="mono"></small></div>
+        <button id="copyDevice" class="btn" data-i18n="optCopy"></button>
+      </div>
+      <div class="actions">
+        <a id="buyBtn" class="btn primary big" href="#" target="_blank" rel="noopener" data-i18n="uiUpgrade"></a>
+        <button id="clearKey" class="btn big" data-i18n="optDeactivate"></button>
+      </div>
+      <div class="note" id="buyNote" data-i18n="optBuyNote"></div>
+    </div>
+  </section>
+
+  <!-- 关于 -->
+  <section class="panel" data-panel="about">
+    <div class="card">
+      <div class="row"><div><b data-i18n="optVersion"></b></div><span id="version" class="mono"></span></div>
+      <div class="row"><div><b data-i18n="optPrivacy"></b><small data-i18n="optPrivacyDesc"></small></div>
+        <a class="btn" href="https://github.com/" target="_blank" rel="noopener" data-i18n="optPrivacyLink"></a></div>
+      <div class="row"><div><b data-i18n="optCredit"></b><small data-i18n="optCreditDesc"></small></div></div>
+      <div class="note" data-i18n="optAboutNote"></div>
+    </div>
+  </section>
+</div>
+
+<script src="../common/config.js"></script>
+<script src="../common/licensing.js"></script>
+<script src="options.js"></script>
+</body>
+</html>

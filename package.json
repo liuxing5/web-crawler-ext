@@ -1,0 +1,16 @@
+{
+  "name": "web-crawler-ext",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Web Crawler — 会爬网页的机械蜘蛛浏览器扩展（MV3，零运行时依赖）",
+  "scripts": {
+    "check": "node tools/build.js --check",
+    "build": "node tools/build.js",
+    "icons": "node tools/make-icons.js",
+    "serve": "node tools/serve.js 8941",
+    "license-server": "node server/license-server.js 8787"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

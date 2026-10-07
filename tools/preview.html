@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>Web Crawler 预览台</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: #000; color: #c9d6f0;
+    font: 16px/1.72 Georgia, "Songti SC", "Noto Serif", serif;
+  }
+  .page { max-width: 860px; margin: 0 auto; padding: 34px 46px 40vh; }
+  h1 { font-size: 34px; color: #8fb6ff; font-weight: 500; letter-spacing: .5px; }
+  h2 { font-size: 24px; color: #8fb6ff; font-weight: 500; margin-top: 30px; border-bottom: 1px solid #1d2b47; padding-bottom: 6px; }
+  a { color: #4aa8ff; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  li { margin: 7px 0; }
+  .toc { background: #0a1120; border: 1px solid #1d2b47; padding: 14px 22px; margin: 18px 0; }
+  .toc b { color: #8fb6ff; }
+  em { color: #9fb4dc; }
+  code { font-family: Consolas, monospace; color: #7fe0c0; }
+  .banner { position: fixed; left: 10px; bottom: 10px; z-index: 2147483001; pointer-events: auto;
+    background: #0b1222ee; border: 1px solid #22304f; color: #93a6cf; font: 12px/1.5 system-ui, sans-serif;
+    padding: 7px 11px; border-radius: 8px; max-width: 320px; }
+  .banner code { color: #43e8ff; }
+</style>
+</head>
+<body>
+<div class="page">
+  <h1>Spider</h1>
+  <p>Spiders (order Araneae) are air-breathing arthropods that have eight legs, chelicerae with fangs that generally
+    inject <a href="#">venom</a>, and spinnerets that extrude <a href="#">silk</a>. They are the largest order of
+    arachnids and rank seventh in total species diversity among all <a href="#">organisms</a>.</p>
+
+  <div class="toc"><b>Contents</b><br>
+    1 &nbsp;<a href="#">Etymology</a> &nbsp; 2 &nbsp;<a href="#">Body plan</a> &nbsp; 3 &nbsp;<a href="#">Silk</a>
+    &nbsp; 4 &nbsp;<a href="#">Ecology</a> &nbsp; 5 &nbsp;<a href="#">Classification</a>
+  </div>
+
+  <h2>Etymology</h2>
+  <p>Arachnologists have proposed various hypotheses for the etymology of the word "spider" from Old English
+    <em>spíþra</em>, from Proto-Germanic <em>*spinþrōn</em>, connected to the verb <em>spinnan</em> "to spin".
+    The common name spider is derived from <em>spider</em>, referring to the way the creature <a href="#">spins its web</a>.</p>
+  <ul>
+    <li>See also: <a href="#">List of spider genera</a>, <a href="#">Spider taxonomy</a>, <a href="#">Evolution of spiders</a></li>
+    <li>External links: <a href="#">The Spiders of the Arid Southwest</a> at the Wayback Machine</li>
+    <li>Record breaking achievements by spiders and the scientists who study them</li>
+  </ul>
+
+  <h2>Body plan</h2>
+  <p>Like other arachnids, the body is divided into two tagmata: the cephalothorax (or prosoma) and the abdomen
+    (or opisthosoma), connected by a narrow waist called the pedicel. The cephalothorax is covered by a single
+    plate, the carapace, and the abdomen by a flexible <a href="#">cuticle</a>.</p>
+  <p>Spiders have eight legs arranged in four pairs, and the legs are composed of seven segments: coxa, trochanter,
+    femur, patella, tibia, metatarsus and tarsus. Each leg ends in two or three <code>claws</code> and is covered
+    with sensory hairs that detect vibrations and air currents.</p>
+  <ul>
+    <li>Book lungs: <a href="#">Differences between scorpions, whip scorpions, harvestmen and spiders</a></li>
+    <li>Nervous system: spiders possess a syncerebrum and a ventral nerve cord with ganglia</li>
+    <li>Venom: <a href="#">Spider bites</a> — most are harmless to humans</li>
+  </ul>
+
+  <h2>Silk</h2>
+  <p>Spider silk is a protein fibre spun by spiders. A spider uses silk to build webs, to wrap and store prey,
+    to line its retreat, to construct egg sacs, and to drift through the air as ballooning silk. Strength-to-weight
+    ratio of dragline silk is comparable to steel and Kevlar.</p>
+  <ol>
+    <li>Orb webs: <a href="#">Araneidae</a> — the classic spiral wheel web</li>
+    <li>Funnel webs: <a href="#">Agelenidae</a>, built as a flat sheet with a retreat</li>
+    <li>Cobwebs: <a href="#">Theridiidae</a>, tangled three-dimensional structures</li>
+  </ol>
+
+  <h2>Ecology</h2>
+  <p>All spiders are predators, and most hunt with the aid of silk. A few species actively chase prey, while the
+    majority sit and wait in a retreat, sensing vibrations transmitted through the substrate. Predation rates are
+    high: a single spider may consume hundreds of insects in its lifetime, making them valuable in biological
+    <a href="#">pest control</a>.</p>
+  <p>Male spiders court females with species-specific signals: vibrations of the web, abdominal tremors, or
+    rhythmic leg waving. After mating, the female spins an egg sac containing hundreds of eggs.</p>
+
+  <h2>Classification</h2>
+  <ul>
+    <li>Suborder <a href="#">Mesothelae</a> — Liphistiidae (segmented spiders)</li>
+    <li>Suborder <a href="#">Opisthothelae</a> — Mygalomorphae and Araneomorphae</li>
+    <li>Family <a href="#">Theraphosidae</a> — tarantulas; family <a href="#">Salticidae</a> — jumping spiders</li>
+    <li>Extant Araneae families: <a href="#">Araneidae</a>, <a href="#">Lycosidae</a>, <a href="#">Pholcidae</a></li>
+  </ul>
+  <p>Fossils of spiders date back to the Devonian <a href="#">Palaeodictyognathus</a> from the Silurian period;
+    the earliest known web-bearing spider lived about 100 million years ago in Cretaceous amber.</p>
+</div>
+
+<div class="banner" data-wc-skip>
+  预览台：真实加载 <code>engine.js + inject.js</code>。<br>
+  用法：页面加载即运行；控制台 <code>__wc.engine.spiders</code> 查看状态，
+  <code>__snap('name')</code> 截取覆盖层画面。
+</div>
+
+<script>
+/* ---------- chrome.* 最小垫片：让真实内容脚本在普通页面里跑起来 ---------- */
+(function () {
+  var KEY = 'wc_preview_settings';
+  var defaults = {
+    version: 1,
+    enabled: true,
+    count: 3,
+    speed: 1,
+    mode: 'virus',
+    skin: 'cyan',
+    follow: true,
+    trail: true,
+    scale: 1.25,
+    virusDuration: 15000,
+    virusRadius: 320,
+    exclusions: [],
+    licenseKey: '',
+    entitlement: { tier: 'pro', expiresAt: null, lifetime: true, verifiedAt: Date.now() }
+  };
+  function load() {
+    var base = { wc_settings: Object.assign({}, defaults) };
+    try {
+      var saved = JSON.parse(localStorage.getItem(KEY) || '{}');
+      if (saved && saved.wc_settings) base.wc_settings = Object.assign(base.wc_settings, saved.wc_settings);
+    } catch (e) {}
+    return base;
+  }
+  var mem = load();
+  var onChange = [];
+
+  window.chrome = {
+    storage: {
+      local: {
+        get: function (d, cb) {
+          if (typeof d === 'string') { var o = {}; o[d] = mem[d]; return cb(o); }
+          var out = Object.assign({}, d, mem);
+          setTimeout(function () { cb(out); }, 0);
+        },
+        set: function (o, cb) {
+          Object.assign(mem, o);
+          try { localStorage.setItem(KEY, JSON.stringify(mem)); } catch (e) {}
+          setTimeout(function () { cb && cb(); onChange.forEach(function (f) {
+            f({ wc_settings: { newValue: mem.wc_settings } }, 'local'); }); }, 0);
+        }
+      },
+      onChanged: { addListener: function (f) { onChange.push(f); } }
+    },
+    runtime: {
+      onMessage: { addListener: function () {} },
+      sendMessage: function () {},
+      getManifest: function () { return { version: '1.0.0-preview' }; },
+      lastError: null
+    },
+    i18n: { getMessage: function (k) { return k; } },
+    tabs: { query: function (a, cb) { cb([]); }, sendMessage: function () {} },
+    action: { setBadgeText: function () {}, setBadgeBackgroundColor: function () {} }
+  };
+  window.__defaults = defaults;
+})();
+</script>
+<script src="../src/common/config.js"></script>
+<script src="../src/content/audio.js"></script>
+<script src="../src/content/engine.js"></script>
+<script src="../src/content/inject.js"></script>
+<script>
+/* ---------- 截图 & 诊断 ---------- */
+window.__snap = function (name) {
+  var c = document.querySelector('canvas[data-wc-overlay]');
+  if (!c) return Promise.reject(new Error('no overlay'));
+  return new Promise(function (res, rej) {
+    c.toBlob(function (blob) {
+      if (!blob) return rej(new Error('blob fail'));
+      fetch('/save?name=' + encodeURIComponent(name + '.png'), { method: 'POST', body: blob })
+        .then(function (r) { return r.text(); }).then(res).catch(rej);
+    }, 'image/png');
+  });
+};
+
+/* 确定性截图：手动推进一帧 → 暂停循环 → 抓取 → 恢复循环 */
+window.__snapNow = function (name) {
+  var e = window.__wc && window.__wc.engine;
+  if (!e || !e.canvas) return Promise.reject(new Error('no engine'));
+  var wasRunning = e.running;
+  e.running = true;
+  e.last = 0;
+  e.frame(performance.now());          // 同步完成一帧更新与绘制
+  cancelAnimationFrame(e.raf);         // 撤销它刚调度的下一帧
+  e.running = false;
+  return window.__snap(name).then(function (r) {
+    if (wasRunning) {
+      e.running = true;
+      e.last = 0;
+      e.raf = requestAnimationFrame(e._onFrame);
+    }
+    return r;
+  });
+};
+
+/* 整页截图：把 DOM 克隆进 SVG foreignObject 渲染 → 叠加蜘蛛覆盖层 → 导出 PNG
+ * （浏览器 screenshot 需要可见窗口，这里绕开限制，且可离线重放） */
+window.__pageShot = function (name) {
+  var overlay = document.querySelector('canvas[data-wc-overlay]');
+  var w = window.innerWidth, h = window.innerHeight;
+  var sy = window.scrollY || 0, sx = window.scrollX || 0;
+
+  // 用 XMLSerializer 生成合法 XML（innerHTML 的 &nbsp; 等 HTML 实体会让 SVG 解析失败）
+  var wrap = document.createElement('div');
+  wrap.setAttribute('style', 'margin-left:' + (-sx) + 'px;margin-top:' + (-sy) + 'px');
+  Array.prototype.forEach.call(document.querySelectorAll('style'), function (s) {
+    wrap.appendChild(s.cloneNode(true));
+  });
+  var bodyClone = document.body.cloneNode(true);
+  while (bodyClone.firstChild) wrap.appendChild(bodyClone.firstChild);
+  Array.prototype.forEach.call(wrap.querySelectorAll('script, canvas, .banner'), function (n) {
+    if (n.parentNode) n.parentNode.removeChild(n);
+  });
+
+  var xml = new XMLSerializer().serializeToString(wrap);
+  var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="' + w + '" height="' + h + '">' +
+    '<foreignObject x="0" y="0" width="' + w + '" height="' + h + '">' + xml + '</foreignObject></svg>';
+  var img = new Image();
+  return new Promise(function (res, rej) {
+    img.onload = function () {
+      var c = document.createElement('canvas');
+      c.width = w; c.height = h;
+      var g = c.getContext('2d');
+      g.fillStyle = '#000'; g.fillRect(0, 0, w, h);
+      try { g.drawImage(img, 0, 0, w, h); } catch (e) { return rej(new Error('draw fail: ' + e)); }
+      if (overlay) { try { g.drawImage(overlay, 0, 0, w, h); } catch (e) {} }
+      c.toBlob(function (b) {
+        if (!b) return rej(new Error('blob fail'));
+        fetch('/save?name=' + encodeURIComponent(name + '.png'), { method: 'POST', body: b })
+          .then(function (r) { return r.text(); }).then(res).catch(rej);
+      }, 'image/png');
+    };
+    img.onerror = function () { rej(new Error('svg load fail')); };
+    img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+  });
+};
+
+/* ============ 商店宣传图生成：1280x800 ============ */
+window.__promo = function (opts) {
+  var W = 1280, H = 800;
+  var c = document.createElement('canvas');
+  c.width = W; c.height = H;
+  var g = c.getContext('2d');
+  var FONT = '"Segoe UI", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif';
+
+  function loadImg(src) {
+    return new Promise(function (res, rej) {
+      var i = new Image();
+      i.onload = function () { res(i); };
+      i.onerror = function () { rej(new Error('img ' + src)); };
+      i.src = src;
+    });
+  }
+
+  return Promise.all([loadImg(opts.shot), loadImg('/icons/icon128.png')]).then(function (arr) {
+    var shot = arr[0], icon = arr[1];
+
+    // 背景
+    var grad = g.createLinearGradient(0, 0, W, H);
+    grad.addColorStop(0, '#0a0e18');
+    grad.addColorStop(1, '#17203a');
+    g.fillStyle = grad;
+    g.fillRect(0, 0, W, H);
+    g.globalAlpha = 0.05;
+    g.fillStyle = '#43e8ff';
+    g.beginPath(); g.arc(1150, 90, 340, 0, Math.PI * 2); g.fill();
+    g.fillStyle = '#ff3ec8';
+    g.beginPath(); g.arc(180, 780, 300, 0, Math.PI * 2); g.fill();
+    g.globalAlpha = 1;
+
+    // 左栏：图标 + 标题
+    g.drawImage(icon, 70, 96, 104, 104);
+    g.fillStyle = '#eef4ff';
+    g.font = '700 60px ' + FONT;
+    g.fillText('Web Crawler', 70, 300);
+    g.fillStyle = '#43e8ff';
+    g.font = '600 30px ' + FONT;
+    g.fillText(opts.tagline, 70, 352);
+
+    // 功能点
+    g.font = '400 24px ' + FONT;
+    (opts.features || []).forEach(function (t, i) {
+      var y = 416 + i * 48;
+      g.fillStyle = i % 2 ? '#ff3ec8' : '#43e8ff';
+      g.beginPath(); g.arc(80, y - 8, 5, 0, Math.PI * 2); g.fill();
+      g.fillStyle = '#aab7d6';
+      g.fillText(t, 100, y);
+    });
+
+    // 页脚
+    g.fillStyle = '#5f6b8a';
+    g.font = '400 20px ' + FONT;
+    g.fillText(opts.footer || 'Chrome · Microsoft Edge · Firefox', 70, 736);
+
+    // 右侧：浏览器窗口 + 截图
+    var fx = 618, fy = 118, fw = 612, fh = 578, bar = 34;
+    g.save();
+    g.shadowColor = 'rgba(0,0,0,.55)';
+    g.shadowBlur = 34;
+    g.shadowOffsetY = 16;
+    g.fillStyle = '#0d1424';
+    g.beginPath(); g.roundRect(fx, fy, fw, fh, 14); g.fill();
+    g.restore();
+
+    // 顶栏
+    g.fillStyle = '#161f36';
+    g.beginPath(); g.roundRect(fx, fy, fw, bar, [14, 14, 0, 0]); g.fill();
+    ['#ff5f57', '#febc2e', '#28c840'].forEach(function (col, i) {
+      g.fillStyle = col;
+      g.beginPath(); g.arc(fx + 20 + i * 20, fy + bar / 2, 6, 0, Math.PI * 2); g.fill();
+    });
+
+    // 截图（cover 裁剪到窗口内容区）
+    var vx = fx + 4, vy = fy + bar, vw = fw - 8, vh = fh - bar - 4;
+    var sc = Math.max(vw / shot.width, vh / shot.height);
+    var sw = vw / sc, sh = vh / sc;
+    var sx = (shot.width - sw) / 2, sy = (shot.height - vh / sc) * (opts.cropTop ? 0 : 0.35);
+    g.save();
+    g.beginPath(); g.roundRect(vx, vy, vw, vh, [0, 0, 10, 10]); g.clip();
+    g.drawImage(shot, sx, sy, sw, sh, vx, vy, vw, vh);
+    g.restore();
+    g.strokeStyle = 'rgba(67,232,255,.35)';
+    g.lineWidth = 1.5;
+    g.beginPath(); g.roundRect(fx, fy, fw, fh, 14); g.stroke();
+
+    return new Promise(function (res, rej) {
+      c.toBlob(function (b) {
+        if (!b) return rej(new Error('blob fail'));
+        fetch('/save?name=' + encodeURIComponent(opts.name + '.png'), { method: 'POST', body: b })
+          .then(function (r) { return r.text(); }).then(res).catch(rej);
+      }, 'image/png');
+    });
+  });
+};
+
+/* 手动步进：标签页隐藏时 rAF 会被暂停，这里用固定 dt 推进模拟 */
+window.__step = function (frames, dtMs) {
+  var e = window.__wc && window.__wc.engine;
+  if (!e) return 'no engine';
+  var was = e.running;
+  var dt = (dtMs || 16.7) / 1000;
+  e.running = true;
+  if (!e.__t) e.__t = performance.now();
+  for (var i = 0; i < frames; i++) {
+    e.__t += dt * 1000;
+    e.frame(e.__t);
+    cancelAnimationFrame(e.raf);
+  }
+  e.running = was;
+  if (was) e.raf = requestAnimationFrame(e._onFrame);
+  var s = e.spiders[0];
+  return JSON.stringify({ speed: Math.round(s.speed), target: s.target, x: Math.round(s.x), y: Math.round(s.y), phase: s.phase % 1 });
+};
+window.__diag = function () {
+  var w = window.__wc;
+  return {
+    running: !!(w && w.engine && w.engine.running),
+    spiders: w && w.engine ? w.engine.spiders.length : 0,
+    corrupted: w && w.corruptor ? w.corruptor.active.length : 0,
+    attrs: document.querySelectorAll('[data-wc]').length,
+    sample: (function () {
+      var els = document.querySelectorAll('[data-wc]');
+      if (!els.length) return null;
+      var e = els[Math.floor(Math.random() * els.length)];
+      return { text: e.textContent.slice(0, 48), style: e.getAttribute('style') };
+    })()
+  };
+};
+</script>
+</body>
+</html>

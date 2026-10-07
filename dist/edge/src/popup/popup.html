@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>Web Crawler</title>
+<link rel="stylesheet" href="popup.css">
+</head>
+<body>
+<header>
+  <img class="logo" src="../../icons/icon48.png" alt="">
+  <div class="tit">
+    <h1 data-i18n="extName"></h1>
+    <span id="tierBadge" class="badge free">FREE</span>
+  </div>
+  <label class="switch" title="">
+    <input type="checkbox" id="enabled">
+    <span class="track"></span>
+  </label>
+</header>
+
+<main>
+  <div class="row">
+    <span class="lbl" data-i18n="uiSpiders"></span>
+    <div class="stepper">
+      <button id="minus" type="button">−</button>
+      <b id="count">1</b>
+      <button id="plus" type="button">+</button>
+    </div>
+  </div>
+
+  <div class="row">
+    <span class="lbl" data-i18n="uiSpeed"></span>
+    <div class="seg" id="speed">
+      <button type="button" data-v="0.6" data-i18n="uiSlow"></button>
+      <button type="button" data-v="1" data-i18n="uiMid"></button>
+      <button type="button" data-v="1.5" data-i18n="uiFast"></button>
+    </div>
+  </div>
+
+  <div class="row">
+    <span class="lbl" data-i18n="uiMode"></span>
+    <div class="seg" id="mode">
+      <button type="button" data-v="walk" data-i18n="uiWalk"></button>
+      <button type="button" data-v="virus" data-i18n="uiVirus"></button>
+    </div>
+  </div>
+
+  <div class="row">
+    <span class="lbl" data-i18n="uiSound"></span>
+    <label class="switch"><input type="checkbox" id="sound"><span class="track"></span></label>
+  </div>
+
+  <div class="row">
+    <span class="lbl" data-i18n="uiSkin"></span>
+    <div class="skins" id="skins"></div>
+  </div>
+
+  <button id="exclude" class="wide ghost" type="button" data-i18n="uiExclude"></button>
+
+  <div class="lic">
+    <input id="key" type="text" autocomplete="off" spellcheck="false" data-i18n-ph="uiLicensePh">
+    <button id="verify" type="button" data-i18n="uiVerify"></button>
+  </div>
+  <div id="licMsg" class="msg"></div>
+
+  <a id="upgrade" class="wide primary" href="#" data-i18n="uiUpgrade"></a>
+  <a id="openOptions" class="link" href="#" data-i18n="uiSettings"></a>
+</main>
+
+<script src="../common/config.js"></script>
+<script src="../common/licensing.js"></script>
+<script src="popup.js"></script>
+</body>
+</html>

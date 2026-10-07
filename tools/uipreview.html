@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>UI 预览台：popup / options</title>
+<style>
+  body { margin: 0; background: #171b26; font: 14px/1.5 system-ui, sans-serif; color: #98a4c0; }
+  .hint { padding: 14px 18px; font-size: 13px; }
+  #stage { display: inline-block; margin: 18px; }
+</style>
+</head>
+<body>
+<div class="hint">
+  UI 预览台：在无扩展环境下渲染 popup / options，导出 PNG 并校验 i18n 键。
+  用法：<code>__ui('popup')</code> / <code>__ui('options')</code>，页面加载后手动调用。
+</div>
+<div id="stage"></div>
+
+<script>
+/* ============ chrome.* 垫片（含真实 i18n 消息表） ============ */
+var MSGS = {};          // zh_CN 消息表
+var MSGS_EN = {};       // en 消息表（缺失时回退校验）
+var MISSING = [];       // 代码引用了但消息表里没有的键
+
+function installShim() {
+  var mem = {};
+  var onChange = [];
+  window.chrome = {
+    storage: {
+      local: {
+        get: function (d, cb) {
+          if (typeof d === 'string') { var o = {}; o[d] = mem[d]; return cb(o); }
+          setTimeout(function () { cb(Object.assign({}, d, mem)); }, 0);
+        },
+        set: function (o, cb) {
+          Object.assign(mem, o);
+          setTimeout(function () {
+            cb && cb();
+            onChange.forEach(function (f) { f({ wc_settings: { newValue: mem.wc_settings } }, 'local'); });
+          }, 0);
+        }
+      },
+      onChanged: { addListener: function (f) { onChange.push(f); } }
+    },
+    runtime: {
+      onMessage: { addListener: function () {} },
+      sendMessage: function () {},
+      openOptionsPage: function () {},
+      getManifest: function () { return { version: '1.0.0' }; },
+      lastError: null
+    },
+    i18n: {
+      getMessage: function (k) {
+        if (MSGS[k]) return MSGS[k].message;
+        if (MSGS_EN[k]) { if (MISSING.indexOf('zh:' + k) < 0) MISSING.push('zh:' + k); return MSGS_EN[k].message; }
+        if (MISSING.indexOf(k) < 0) MISSING.push(k);
+        return k;
+      }
+    },
+    tabs: {
+      query: function (q, cb) {
+        // 模拟一个当前标签页
+        setTimeout(function () { cb([{ id: 1, url: 'https://example.com/wiki/Spider', active: true }]); }, 0);
+      },
+      sendMessage: function (id, msg, cb) {
+        setTimeout(function () {
+          if (msg && msg.type === 'wc:state' && cb) {
+            cb({ host: 'example.com', running: true, spiders: 3, mode: 'virus', corrupted: 22 });
+          }
+        }, 0);
+      }
+    },
+    action: { setBadgeText: function () {}, setBadgeBackgroundColor: function () {} }
+  };
+}
+
+/* ============ 载入扩展页面 ============ */
+function loadCss(url, href) {
+  return fetch(new URL(href, url).href).then(function (r) { return r.text(); }).then(function (css) {
+    var s = document.createElement('style');
+    s.textContent = css;
+    document.head.appendChild(s);
+  }).catch(function () {});
+}
+
+function loadScript(url) {
+  return new Promise(function (res, rej) {
+    var s = document.createElement('script');
+    s.src = url;
+    s.async = false;
+    s.onload = res;
+    s.onerror = function () { rej(new Error('load fail ' + url)); };
+    document.body.appendChild(s);
+  });
+}
+
+window.__ui = function (which) {
+  MISSING = [];
+  var pageUrl = which === 'options' ? '/src/options/options.html' : '/src/popup/popup.html';
+  var base = new URL(pageUrl, location.href);
+
+  return Promise.all([
+    fetch('/_locales/zh_CN/messages.json').then(function (r) { return r.json(); }),
+    fetch('/_locales/en/messages.json').then(function (r) { return r.json(); }).catch(function () { return {}; }),
+    fetch(pageUrl).then(function (r) { return r.text(); })
+  ]).then(function (all) {
+    MSGS = all[0]; MSGS_EN = all[1];
+    installShim();
+
+    var doc = new DOMParser().parseFromString(all[2], 'text/html');
+    document.title = 'UI: ' + which;
+
+    // 样式
+    var cssJobs = [];
+    Array.prototype.forEach.call(doc.querySelectorAll('link[rel="stylesheet"]'), function (l) {
+      cssJobs.push(loadCss(base, l.getAttribute('href')));
+    });
+
+    // 结构（重写相对资源路径）
+    Array.prototype.forEach.call(doc.querySelectorAll('img'), function (img) {
+      img.setAttribute('src', new URL(img.getAttribute('src'), base).href);
+    });
+    document.body.innerHTML = '';
+    var hint = document.createElement('div');
+    hint.className = 'hint';
+    hint.textContent = which + ' — 尺寸以实际渲染为准';
+    document.body.appendChild(hint);
+    var stage = document.createElement('div');
+    stage.id = 'stage';
+    while (doc.body.firstChild) stage.appendChild(doc.body.firstChild);
+    document.body.appendChild(stage);
+
+    return Promise.all(cssJobs);
+  }).then(function () {
+    // 顺序执行页面脚本：config → licensing → 业务脚本
+    var urls = ['/src/common/config.js', '/src/common/licensing.js'];
+    urls.push(which === 'options' ? '/src/options/options.js' : '/src/popup/popup.js');
+    var p = Promise.resolve();
+    urls.forEach(function (u) { p = p.then(function () { return loadScript(u); }); });
+    return p;
+  }).then(function () {
+    document.dispatchEvent(new Event('DOMContentLoaded', { bubbles: true }));
+    return new Promise(function (r) { setTimeout(r, 300); });
+  }).then(function () {
+    return { missingI18n: MISSING.slice(), title: document.title };
+  });
+};
+
+/* ============ 导出当前 UI 为 PNG（SVG foreignObject 合成） ============ */
+window.__uiShot = function (name) {
+  var w = Math.min(window.innerWidth, 900), h = Math.min(window.innerHeight, 700);
+  var wrap = document.createElement('div');
+  wrap.setAttribute('style', 'background:#171b26;padding:8px;');
+  Array.prototype.forEach.call(document.querySelectorAll('style'), function (s) {
+    wrap.appendChild(s.cloneNode(true));
+  });
+  var clone = document.body.cloneNode(true);
+  while (clone.firstChild) wrap.appendChild(clone.firstChild);
+  Array.prototype.forEach.call(wrap.querySelectorAll('script'), function (n) {
+    if (n.parentNode) n.parentNode.removeChild(n);
+  });
+  var xml = new XMLSerializer().serializeToString(wrap);
+  var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="' + w + '" height="' + h + '">' +
+    '<foreignObject width="' + w + '" height="' + h + '">' + xml + '</foreignObject></svg>';
+  var img = new Image();
+  return new Promise(function (res, rej) {
+    img.onload = function () {
+      var c = document.createElement('canvas');
+      c.width = w; c.height = h;
+      var g = c.getContext('2d');
+      g.fillStyle = '#171b26'; g.fillRect(0, 0, w, h);
+      g.drawImage(img, 0, 0, w, h);
+      c.toBlob(function (b) {
+        fetch('/save?name=' + encodeURIComponent(name + '.png'), { method: 'POST', body: b })
+          .then(function (r) { return r.text(); }).then(res).catch(rej);
+      }, 'image/png');
+    };
+    img.onerror = function () { rej(new Error('svg load fail')); };
+    img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+  });
+};
+</script>
+</body>
+</html>
