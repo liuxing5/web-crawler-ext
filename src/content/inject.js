@@ -129,11 +129,28 @@
     }
   }
 
+  /* 打字防护：只在“最近确实敲过字”时暂停感染。
+   * 仅自动聚焦（如淘宝/京东首页自动聚焦搜索框）不应永久禁用特效——
+   * 修复前只要焦点在输入框就一直 return，导致整个页面永远无特效。 */
+  var lastTypingAt = 0;
+  try {
+    ['keydown', 'input', 'paste', 'cut'].forEach(function (ev) {
+      document.addEventListener(ev, function (e) {
+        var el = e.target;
+        if (!el || el.nodeType !== 1) return;
+        var t = el.tagName;
+        if (t === 'INPUT' || t === 'TEXTAREA' || t === 'SELECT' || el.isContentEditable) lastTypingAt = Date.now();
+      }, { capture: true, passive: true });
+    });
+  } catch (e) { /* ignore */ }
+
   function isTyping() {
     var a = document.activeElement;
     if (!a) return false;
     var t = a.tagName;
-    return t === 'INPUT' || t === 'TEXTAREA' || t === 'SELECT' || !!a.isContentEditable;
+    var editable = t === 'INPUT' || t === 'TEXTAREA' || t === 'SELECT' || !!a.isContentEditable;
+    if (!editable) return false;
+    return Date.now() - lastTypingAt < 1500;   // 1.5 秒内敲过字才算“正在输入”
   }
 
   function Corruptor() {
