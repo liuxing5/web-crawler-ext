@@ -190,7 +190,9 @@ const firefoxDir = assemble('firefox', mf => {
   mf.browser_specific_settings = {
     gecko: {
       id: 'webcrawler@webcrawler-ext.example',
-      strict_min_version: '115.0'
+      strict_min_version: '115.0',
+      // 2025-11-03 起 AMO 对新扩展强制要求数据收集声明；本扩展零收集 → none
+      data_collection_permissions: { required: ['none'] }
     }
   };
 });

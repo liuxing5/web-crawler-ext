@@ -111,6 +111,8 @@ duration (default 9 seconds). All behavior is user-triggered and reversible.
 
 - 包内 `browser_specific_settings.gecko.id = webcrawler@webcrawler-ext.example`
   （AMO 接受；正式签名后沿用此 ID）
+- 包内已含 `data_collection_permissions: { required: ["none"] }`
+  （2025-11-03 起 AMO 强制要求的"数据收集声明"，本扩展零收集）
 - 若 AMO 校验器报 `background.scripts` 相关警告：Firefox MV3 支持 scripts
   形式的事件页，属正常，不需改包
 - 描述里不要出现"最好的/第一/免费替代 XX 商标产品"等夸大或蹭商标用语
