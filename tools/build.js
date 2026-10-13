@@ -155,7 +155,23 @@ function assemble(name, mutate) {
 
 function zipDir(dir, zipPath) {
   fs.rmSync(zipPath, { force: true });
-  const ps = `$ErrorActionPreference='Stop'; Compress-Archive -Path '${dir}\\*' -DestinationPath '${zipPath}' -Force`;
+  // 必须用 .NET 手写 entry 且强制正斜杠：Compress-Archive 在 Windows 上写反斜杠，
+  // Firefox AMO 校验器会以 "Invalid file name in archive" 拒收（Chrome/Edge 不检查）
+  const ps = [
+    `$ErrorActionPreference='Stop'`,
+    `Add-Type -AssemblyName System.IO.Compression`,
+    `Add-Type -AssemblyName System.IO.Compression.FileSystem`,
+    `$root=(Resolve-Path -LiteralPath '${dir}').Path`,
+    `$z=[System.IO.Compression.ZipFile]::Open('${zipPath}','Create')`,
+    `try {`,
+    `  Get-ChildItem -LiteralPath $root -Recurse -File | ForEach-Object {`,
+    `    $rel=$_.FullName.Substring($root.Length+1) -replace '\\\\','/'`,
+    `    [System.IO.Compression.ZipFileExtensions]::CreateEntryFromFile($z,$_.FullName,$rel) | Out-Null`,
+    `  }`,
+    `  $bad=@($z.Entries | Where-Object { $_.FullName -match '\\\\' })`,
+    `  if($bad.Count -gt 0){ throw ('backslash entry: '+$bad[0].FullName) }`,
+    `} finally { $z.Dispose() }`
+  ].join('; ');
   execFileSync('powershell', ['-NoProfile', '-Command', ps], { stdio: 'pipe' });
 }
 
