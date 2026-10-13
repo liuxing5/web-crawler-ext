@@ -1,0 +1,4 @@
+# 本地临时产物
+tools/_frames/gif/
+tools/_frames/chrome-profile/
+node_modules/
