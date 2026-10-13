@@ -1,8 +1,27 @@
 # Web Crawler — 会爬网页的机械蜘蛛（浏览器扩展）
 
+[![Chrome Web Store](https://img.shields.io/chrome-web-store/v/aehfejcbddngnffjhcomphkkommlgogo?label=Chrome%20Web%20Store&color=4285f4)](https://chromewebstore.google.com/detail/web-crawler-%E7%BD%91%E7%BB%9C%E7%88%AC%E8%99%AB%E8%9E%8D%E8%99%84/aehfejcbddngnffjhcomphkkommlgogo)
+[![Chrome Users](https://img.shields.io/chrome-web-store/users/aehfejcbddngnffjhcomphkkommlgogo?label=users)](https://chromewebstore.google.com/detail/web-crawler-%E7%BD%91%E7%BB%9C%E7%88%AC%E8%99%AB%E8%9E%8D%E8%99%84/aehfejcbddngnffjhcomphkkommlgogo)
+![Edge](https://img.shields.io/badge/Edge-under%20review-0078d4?logo=microsoftedge)
+![Firefox](https://img.shields.io/badge/Firefox-under%20review-ff7139?logo=firefox)
+[![Data](https://img.shields.io/badge/data%20collection-none-brightgreen)](https://liuxing5.github.io/web-crawler-ext/#privacy)
+[![Landing](https://img.shields.io/badge/official%20site-liuxing5.github.io-43e8ff)](https://liuxing5.github.io/web-crawler-ext/)
+
 复刻 Slava Rybin 的 "Web Crawler" 蜘蛛视频效果：8 腿真实 IK 步态的霓虹机械蜘蛛
 在任意网页上爬行，可选"病毒模式"对页面元素做限时视觉污染并自动还原。
 MV3、零依赖、可上架 Chrome / Edge / Firefox，内置买断制授权码付费链路。
+
+## 安装 Install
+
+- **Chrome**（已上架，v1.0.1）：[Chrome Web Store](https://chromewebstore.google.com/detail/web-crawler-%E7%BD%91%E7%BB%9C%E7%88%AC%E8%99%AB%E8%9E%8D%E8%99%84/aehfejcbddngnffjhcomphkkommlgogo)
+- **Edge / Firefox**：审核中，过审后补充链接
+- 官网/演示/隐私政策：[liuxing5.github.io/web-crawler-ext](https://liuxing5.github.io/web-crawler-ext/)
+
+演示（病毒模式，感染 → 自动还原）：
+
+![demo](store/promo/demo.gif)
+
+宣传图：
 
 ![promo](store/screenshots/store_promo1.png)
 
