@@ -3,32 +3,378 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Web Crawler — 隐私政策 / Privacy Policy</title>
+<title>Web Crawler 网络爬虫蜘蛛 – 会爬网页的机械蜘蛛扩展 | 隐私政策</title>
+<meta name="description" content="一只真正会爬网页的机械蜘蛛：霓虹细腿在任意网站上行走，病毒模式让页面元素临时『感染』并自动还原。免费、开源、零数据收集。Free, open, zero data collection.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Web Crawler 网络爬虫蜘蛛 — 会爬网页的机械蜘蛛">
+<meta property="og:description" content="霓虹机械蜘蛛在任意网页上行走 · 病毒模式 · 免费 · 零数据收集">
+<meta property="og:image" content="https://liuxing5.github.io/web-crawler-ext/assets/og.png">
+<link rel="icon" type="image/png" href="assets/icon128.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Web Crawler 网络爬虫蜘蛛",
+  "operatingSystem": "Chrome, Edge, Firefox",
+  "applicationCategory": "BrowserApplication",
+  "softwareVersion": "1.0.1",
+  "url": "https://liuxing5.github.io/web-crawler-ext/",
+  "image": "https://liuxing5.github.io/web-crawler-ext/assets/og.png",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "author": { "@type": "Person", "name": "liuxing5", "url": "https://github.com/liuxing5" }
+}
+</script>
 <style>
-  :root { color-scheme: light dark; }
-  body { margin: 0; padding: 40px 20px 80px; background: #fff; color: #1a1f2e;
-         font: 16px/1.75 -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; }
-  main { max-width: 760px; margin: 0 auto; }
-  h1 { font-size: 28px; margin-bottom: 4px; }
-  h2 { font-size: 20px; margin-top: 36px; border-left: 4px solid #43e8ff; padding-left: 10px; }
-  .meta { color: #667; font-size: 14px; }
-  .divider { margin: 48px 0 8px; border: 0; border-top: 2px dashed #d5dbe8; }
-  .en { color: #333; }
-  code { background: #f0f3f8; padding: 1px 6px; border-radius: 4px; font-size: 14px; }
-  footer { margin-top: 56px; font-size: 13px; color: #889; border-top: 1px solid #e4e8f0; padding-top: 16px; }
-  @media (prefers-color-scheme: dark) {
-    body { background: #12151d; color: #dbe2f2; }
-    .meta, footer { color: #8892a8; }
-    code { background: #1d2230; }
-    .en { color: #c3cbdd; }
-    footer { border-color: #262c3a; }
+  :root {
+    --bg: #05070d;
+    --panel: #0a101c;
+    --panel2: #0d1524;
+    --line: #1b2a45;
+    --cyan: #43e8ff;
+    --red: #ff2d55;
+    --lime: #8dff3c;
+    --amber: #ffc23c;
+    --text: #c9d6f0;
+    --dim: #6f80a3;
+    --mono: "Cascadia Mono", ui-monospace, Consolas, "Courier New", monospace;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font: 16px/1.8 var(--mono);
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(67, 232, 255, .07), transparent 60%),
+      repeating-linear-gradient(0deg, rgba(255,255,255,.022) 0 1px, transparent 1px 3px);
+  }
+  a { color: var(--cyan); text-decoration: none; }
+  a:hover { text-shadow: 0 0 8px rgba(67,232,255,.8); }
+  ::selection { background: var(--cyan); color: #000; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+  /* ---------- 顶部导航 ---------- */
+  nav {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(5,7,13,.88); backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-in { display: flex; align-items: center; gap: 18px; height: 58px; }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; letter-spacing: .12em; color: var(--text); }
+  .brand img { width: 26px; height: 26px; image-rendering: auto; }
+  .brand:hover { text-shadow: none; }
+  .nav-links { margin-left: auto; display: flex; gap: 22px; font-size: 14px; }
+  .nav-links a { color: var(--dim); }
+  .nav-links a:hover { color: var(--cyan); text-shadow: none; }
+  .nav-cta {
+    background: var(--cyan); color: #000 !important; padding: 7px 16px;
+    font-weight: 700; font-size: 14px; clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+  }
+  .nav-cta:hover { background: #7df1ff; text-shadow: none; }
+
+  /* ---------- Hero ---------- */
+  header { padding: 72px 0 40px; position: relative; }
+  .log { color: var(--dim); font-size: 13px; margin-bottom: 26px; }
+  .log .ok { color: var(--lime); }
+  .log .wait { color: var(--amber); }
+  h1 {
+    margin: 0; font-size: clamp(34px, 6vw, 62px); line-height: 1.15; letter-spacing: .02em;
+    color: #eaf6ff; text-transform: uppercase;
+    text-shadow: -2px 0 rgba(255,45,85,.65), 2px 0 rgba(67,232,255,.65);
+    animation: glitch 5s infinite steps(1);
+  }
+  @keyframes glitch {
+    0%, 93% { text-shadow: -2px 0 rgba(255,45,85,.65), 2px 0 rgba(67,232,255,.65); }
+    94% { text-shadow: -5px 2px rgba(255,45,85,.9), 5px -2px rgba(67,232,255,.9); }
+    95% { text-shadow: 3px -1px rgba(255,45,85,.9), -3px 1px rgba(67,232,255,.9); }
+    96% { text-shadow: -2px 0 rgba(255,45,85,.65), 2px 0 rgba(67,232,255,.65); }
+  }
+  .sub { margin: 22px 0 0; font-size: clamp(16px, 2.2vw, 21px); color: var(--text); max-width: 760px; }
+  .sub-en { margin: 8px 0 0; font-size: 14px; color: var(--dim); max-width: 760px; }
+  .cta-row { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 34px; align-items: center; }
+  .btn {
+    display: inline-block; padding: 13px 26px; font-weight: 700; font-size: 15px;
+    border: 1px solid var(--cyan); color: var(--cyan);
+    clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
+    transition: all .15s;
+  }
+  .btn:hover { background: rgba(67,232,255,.14); text-shadow: none; box-shadow: 0 0 18px rgba(67,232,255,.35); }
+  .btn.solid { background: var(--cyan); color: #001018; }
+  .btn.solid:hover { background: #7df1ff; }
+  .chip {
+    display: inline-block; padding: 12px 22px; font-size: 14px; color: var(--dim);
+    border: 1px dashed var(--line); clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
+    cursor: default;
+  }
+  .free-note { font-size: 13px; color: var(--dim); margin-top: 16px; }
+  .free-note b { color: var(--lime); }
+
+  /* ---------- 演示窗口 ---------- */
+  .demo { margin-top: 54px; }
+  .win {
+    border: 1px solid var(--line); background: #000;
+    box-shadow: 0 0 0 1px rgba(67,232,255,.12), 0 24px 60px rgba(0,0,0,.6);
+  }
+  .win-bar {
+    display: flex; align-items: center; gap: 8px; padding: 9px 14px;
+    background: var(--panel2); border-bottom: 1px solid var(--line);
+  }
+  .dot { width: 11px; height: 11px; border-radius: 50%; }
+  .dot.r { background: var(--red); } .dot.y { background: var(--amber); } .dot.g { background: var(--lime); }
+  .win-url {
+    margin-left: 10px; flex: 1; background: var(--bg); border: 1px solid var(--line);
+    color: var(--dim); font-size: 12px; padding: 3px 12px; border-radius: 3px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .win img { display: block; width: 100%; height: auto; }
+  .demo-cap { text-align: center; color: var(--dim); font-size: 13px; margin-top: 12px; }
+
+  /* ---------- 分区 ---------- */
+  section { padding: 66px 0 10px; }
+  h2 {
+    font-size: 15px; letter-spacing: .28em; text-transform: uppercase; color: var(--cyan);
+    margin: 0 0 6px;
+  }
+  h2::before { content: "// "; color: var(--dim); }
+  .h-cn { font-size: 26px; color: #eaf6ff; margin: 0 0 30px; font-weight: 700; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+  .card {
+    background: var(--panel); border: 1px solid var(--line); padding: 22px 20px 20px;
+    position: relative; transition: border-color .2s, transform .2s;
+  }
+  .card:hover { border-color: var(--cyan); transform: translateY(-3px); }
+  .card::before {
+    content: attr(data-tag); position: absolute; top: -10px; left: 14px;
+    background: var(--bg); padding: 0 8px; font-size: 11px; color: var(--lime); letter-spacing: .1em;
+  }
+  .card h3 { margin: 6px 0 8px; font-size: 17px; color: #eaf6ff; }
+  .card h3 .en { display: block; font-size: 12px; color: var(--dim); font-weight: 400; margin-top: 2px; }
+  .card p { margin: 0; font-size: 14px; line-height: 1.75; color: var(--text); }
+  .card p.en { color: var(--dim); font-size: 12.5px; margin-top: 8px; }
+  .ico { font-size: 22px; }
+
+  /* 安装步骤 */
+  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; counter-reset: s; }
+  .step { background: var(--panel); border: 1px solid var(--line); padding: 20px; font-size: 14px; }
+  .step b { color: var(--cyan); display: block; margin-bottom: 6px; }
+  .step b::before { counter-increment: s; content: "[0" counter(s) "] "; color: var(--dim); }
+
+  /* 价格 */
+  .plans { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+  .plan { background: var(--panel); border: 1px solid var(--line); padding: 26px 24px; }
+  .plan.hot { border-color: var(--cyan); box-shadow: 0 0 24px rgba(67,232,255,.14); }
+  .plan .pname { font-size: 13px; letter-spacing: .2em; color: var(--dim); text-transform: uppercase; }
+  .plan.hot .pname { color: var(--cyan); }
+  .plan .price { font-size: 34px; color: #eaf6ff; margin: 8px 0 4px; }
+  .plan .price small { font-size: 14px; color: var(--dim); }
+  .plan ul { list-style: none; padding: 0; margin: 16px 0 0; font-size: 14px; }
+  .plan li { padding: 5px 0 5px 22px; position: relative; }
+  .plan li::before { content: "▸"; position: absolute; left: 0; color: var(--lime); }
+  .plan li.no::before { content: "✕"; color: var(--dim); }
+  .plan li.no { color: var(--dim); }
+
+  /* FAQ */
+  .faq details {
+    background: var(--panel); border: 1px solid var(--line); margin-bottom: 10px; padding: 0;
+  }
+  .faq summary { cursor: pointer; padding: 15px 18px; font-weight: 700; color: #eaf6ff; list-style: none; }
+  .faq summary::before { content: "> "; color: var(--cyan); }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq details[open] summary { border-bottom: 1px solid var(--line); color: var(--cyan); }
+  .faq .a { padding: 14px 18px 16px; font-size: 14.5px; color: var(--text); }
+  .faq .a .en { display: block; color: var(--dim); font-size: 13px; margin-top: 6px; }
+
+  /* ---------- 隐私政策（商店审核区） ---------- */
+  #privacy {
+    margin-top: 80px; border-top: 3px double var(--line); padding-top: 48px;
+  }
+  #privacy .pnote {
+    background: var(--panel2); border: 1px solid var(--line); border-left: 3px solid var(--amber);
+    padding: 14px 18px; font-size: 13.5px; color: var(--dim); margin-bottom: 34px;
+  }
+  #privacy .pnote b { color: var(--amber); }
+  #privacy h1 { font-size: 26px; animation: none; text-shadow: none; color: #eaf6ff; text-transform: none; }
+  #privacy h2 {
+    font-size: 20px; text-transform: none; letter-spacing: 0; color: var(--cyan);
+    margin: 36px 0 10px; border-left: 4px solid var(--cyan); padding-left: 12px;
+  }
+  #privacy h2::before { content: ""; }
+  #privacy .meta { color: var(--dim); font-size: 14px; margin-bottom: 4px; }
+  #privacy p, #privacy li { font-size: 15px; }
+  #privacy ul { padding-left: 24px; }
+  #privacy strong { color: #eaf6ff; }
+  #privacy code { background: var(--panel2); border: 1px solid var(--line); padding: 1px 6px; font-size: 13px; }
+  #privacy .divider { margin: 48px 0 8px; border: 0; border-top: 2px dashed var(--line); }
+  #privacy .en-block { color: var(--dim); }
+  #privacy .en-block h1 { color: var(--text); font-size: 22px; }
+
+  /* ---------- 页脚 ---------- */
+  footer {
+    margin-top: 70px; border-top: 1px solid var(--line); padding: 30px 0 46px;
+    font-size: 13px; color: var(--dim);
+  }
+  footer .cols { display: flex; flex-wrap: wrap; gap: 34px; justify-content: space-between; }
+  footer a { color: var(--dim); }
+  footer a:hover { color: var(--cyan); }
+  .hz { height: 6px; background: repeating-linear-gradient(-45deg, var(--cyan) 0 14px, #000 14px 28px); opacity: .5; }
+
+  @media (max-width: 640px) {
+    .nav-links a:not(.nav-cta) { display: none; }
+    header { padding-top: 46px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    h1 { animation: none; }
+    html { scroll-behavior: auto; }
   }
 </style>
 </head>
 <body>
-<main>
+
+<nav>
+  <div class="wrap nav-in">
+    <a class="brand" href="#"><img src="assets/icon128.png" alt="Web Crawler icon">WEB&nbsp;CRAWLER</a>
+    <div class="nav-links">
+      <a href="#demo">演示 Demo</a>
+      <a href="#features">功能 Features</a>
+      <a href="#install">安装 Install</a>
+      <a href="#privacy">🔒 隐私 Privacy</a>
+      <a href="https://github.com/liuxing5/web-crawler-ext" target="_blank" rel="noopener">GitHub</a>
+      <a class="nav-cta" href="https://chromewebstore.google.com/detail/web-crawler-%E7%BD%91%E7%BB%9C%E7%88%AC%E8%99%AB%E8%9E%8D%E8%99%84/aehfejcbddngnffjhcomphkkommlgogo" target="_blank" rel="noopener">免费安装 →</a>
+    </div>
+  </div>
+</nav>
+
+<header class="wrap">
+  <div class="log">
+    <span class="ok">✔ Chrome Web Store：v1.0.1 已上架</span> ·
+    <span class="wait">⏳ Edge Add-ons：审核中</span> ·
+    <span class="wait">⏳ Firefox Add-ons：审核中</span> ·
+    数据收集：无 / <span class="ok">NONE</span>
+  </div>
+
+  <h1>一只真正会爬<br>网页的机械蜘蛛</h1>
+  <p class="sub">霓虹细腿的机械蜘蛛在你打开的任意网站上行走、探索页面结构；开启<b style="color:var(--red)">病毒模式</b>后，它爬过的地方会被临时"感染"——高亮、旋转、字距错乱，几秒后自动还原。电影里的电脑病毒，在你自己的屏幕上成真。</p>
+  <p class="sub-en">A neon mechanical spider that walks across any website you open. Flip on Virus Mode and the elements it crawls over get temporarily corrupted — highlighted, rotated, letter-spaced to chaos — then restore themselves. Movie-style computer viruses, running on your screen.</p>
+
+  <div class="cta-row">
+    <a class="btn solid" href="https://chromewebstore.google.com/detail/web-crawler-%E7%BD%91%E7%BB%9C%E7%88%AC%E8%99%AB%E8%9E%8D%E8%99%84/aehfejcbddngnffjhcomphkkommlgogo" target="_blank" rel="noopener">▶ Chrome 免费安装</a>
+    <!-- STORE:EDGE -->
+    <span class="chip">Edge — 审核中</span>
+    <!-- STORE:FIREFOX -->
+    <span class="chip">Firefox — 审核中</span>
+  </div>
+  <p class="free-note">永久免费：<b>1 只蜘蛛 + 青色皮肤</b>，无需注册，无广告，<b>零数据收集</b>。Free forever: 1 spider + cyan skin, no account, no ads, zero data collection.</p>
+
+  <div class="demo" id="demo">
+    <div class="win">
+      <div class="win-bar">
+        <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+        <span class="win-url">https://en.wikipedia.org/wiki/Spider</span>
+      </div>
+      <img src="promo/demo.gif" alt="Web Crawler 演示：两只霓虹蜘蛛在网页上行走，病毒模式感染页面元素后自动还原" width="800" height="500">
+    </div>
+    <p class="demo-cap">↑ 实机录制：行走 + 病毒模式（感染 → 自动还原）/ live recording · 14s loop</p>
+  </div>
+</header>
+
+<section class="wrap" id="features">
+  <h2>features</h2>
+  <div class="h-cn">它能做什么</div>
+  <div class="grid">
+    <div class="card" data-tag="~/walk">
+      <span class="ico">🕷️</span>
+      <h3>真·行走引擎 <span class="en">Real walking engine</span></h3>
+      <p>八条腿的步态动画由物理步进驱动，蜘蛛会避开文字、沿着链接与图片边缘探索，每一步都不一样。</p>
+      <p class="en">Eight-leg gait animation driven by physics; the spider avoids text and traces links and images.</p>
+    </div>
+    <div class="card" data-tag="~/virus">
+      <span class="ico">☣️</span>
+      <h3>病毒模式 <span class="en">Virus Mode</span></h3>
+      <p>爬过的 DOM 元素被随机"感染"：高亮变色、描边旋转、标题超大化、字距错乱——到期自动还原，绝不弄坏页面。</p>
+      <p class="en">Crawled elements get time-limited visual corruption that always restores itself.</p>
+    </div>
+    <div class="card" data-tag="~/skins">
+      <span class="ico">🎨</span>
+      <h3>霓虹皮肤 <span class="en">Neon skins</span></h3>
+      <p>青、荧光绿、品红、琥珀、幽灵白、血红六款皮肤，腿色、关节与光核全部可换。</p>
+      <p class="en">Six skins — cyan, lime, magenta, amber, ghost, blood.</p>
+    </div>
+    <div class="card" data-tag="~/silence">
+      <span class="ico">🛡️</span>
+      <h3>零数据收集 <span class="en">Zero data collection</span></h3>
+      <p>不收集、不上传、不追踪。所有设置只存本地，卸载即消失。音效与动画全部本地实时合成。</p>
+      <p class="en">No collection, no upload, no tracking. Settings live only on your device.</p>
+    </div>
+  </div>
+</section>
+
+<section class="wrap" id="install">
+  <h2>install</h2>
+  <div class="h-cn">三步安装</div>
+  <div class="steps">
+    <div class="step"><b>打开商店页面</b>点击上方「Chrome 免费安装」，进入 Chrome 应用商店（Edge / Firefox 过审后开放）。</div>
+    <div class="step"><b>点击「添加至 Chrome」</b>扩展只需要「读取所有网站数据」权限，用于在页面上画动画——仅此而已。</div>
+    <div class="step"><b>打开任意网页</b>蜘蛛会立刻出现。点工具栏图标可切换行走 / 病毒模式、换皮肤、调数量。</div>
+  </div>
+</section>
+
+<section class="wrap" id="pricing">
+  <h2>pricing</h2>
+  <div class="h-cn">价格</div>
+  <div class="plans">
+    <div class="plan">
+      <div class="pname">Free</div>
+      <div class="price">$0 <small>永久免费</small></div>
+      <ul>
+        <li>1 只蜘蛛 · 青色皮肤</li>
+        <li>行走模式 + 病毒模式</li>
+        <li>音效、本地设置、站点排除</li>
+        <li class="no">多蜘蛛与全部皮肤（Pro）</li>
+      </ul>
+    </div>
+    <div class="plan hot">
+      <div class="pname">Pro · 授权码</div>
+      <div class="price">敬请期待 <small>一次性买断</small></div>
+      <ul>
+        <li>最多 6 只蜘蛛同屏</li>
+        <li>全部 6 款霓虹皮肤</li>
+        <li>病毒半径 / 时长全参数</li>
+        <li>站外支付购买授权码，无需账号</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="wrap faq" id="faq">
+  <h2>faq</h2>
+  <div class="h-cn">常见问题</div>
+  <details>
+    <summary>它会拖慢我的浏览器吗？</summary>
+    <div class="a">不会。动画走 requestAnimationFrame，单帧开销极小；空闲标签页自动暂停；你滚动页面时它会让出控制权。<span class="en">No — rAF-driven rendering, auto-pause in idle tabs, and it yields while you scroll.</span></div>
+  </details>
+  <details>
+    <summary>病毒模式会弄坏网页吗？</summary>
+    <div class="a">不会。它只改元素的内联样式，每个改动都被记录，到期逐条还原；关掉扩展立即全部恢复。<span class="en">No — only inline styles are touched, each one recorded and restored on schedule.</span></div>
+  </details>
+  <details>
+    <summary>扩展会读取我浏览的页面内容吗？</summary>
+    <div class="a">不会。内容脚本只负责画动画，页面文字、表单、Cookie 一概不读、不上传。唯一可能的网络请求是你主动输入授权码时的校验。<span class="en">No. Page content is never read or transmitted.</span></div>
+  </details>
+  <details>
+    <summary>支持哪些浏览器？</summary>
+    <div class="a">Chrome 已上架；Edge 与 Firefox 已提交、审核中。三端共用一套代码，manifest 分别适配。<span class="en">Chrome live; Edge &amp; Firefox under review.</span></div>
+  </details>
+</section>
+
+<!-- ==================== 隐私政策（Chrome / Edge / Firefox 商店审核引用本页 URL） ==================== -->
+<section class="wrap" id="privacy">
+  <div class="pnote">
+    📜 <b>隐私政策 / Privacy Policy</b> —— 本区块即本页 URL 所对应的完整隐私政策，供 Chrome Web Store /
+    Microsoft Edge Add-ons / Firefox Add-ons 审核与用户查阅；上方为产品介绍。
+    This block is the full privacy policy served at this URL for store review.
+  </div>
+
   <h1>Web Crawler 隐私政策</h1>
-  <div class="meta">Privacy Policy · 最后更新 / Last updated：2026-10-07 · 适用版本：1.0.0</div>
+  <div class="meta">Privacy Policy · 最后更新 / Last updated：2026-10-07 · 适用版本：1.0.1</div>
 
   <h2>概述</h2>
   <p>Web Crawler（以下简称“本扩展”）是一款娱乐性质的浏览器扩展：在网页上绘制会爬行的机械蜘蛛动画，
@@ -69,8 +415,8 @@
 
   <hr class="divider">
 
-  <div class="en">
-    <h1 style="font-size:24px">Privacy Policy (English)</h1>
+  <div class="en-block">
+    <h1>Privacy Policy (English)</h1>
     <h2>Overview</h2>
     <p>Web Crawler is an entertainment browser extension: it draws animated mechanical
     spiders crawling over web pages and, optionally, applies time-limited visual
@@ -97,11 +443,23 @@
     <p>Material changes update the “Last updated” date above. Contact:
     <strong><a href="https://github.com/liuxing5" rel="noopener">github.com/liuxing5</a></strong> (GitHub Issues).</p>
   </div>
+</section>
 
-  <footer>
-    本页面为 Web Crawler 浏览器扩展的公开隐私政策，供 Chrome Web Store /
-    Microsoft Edge Add-ons / Firefox Add-ons 审核与用户查阅。
-  </footer>
-</main>
+<footer>
+  <div class="hz" style="margin-bottom:26px"></div>
+  <div class="wrap cols">
+    <div>
+      <div style="color:var(--text);font-weight:700;letter-spacing:.1em">WEB CRAWLER 网络爬虫蜘蛛</div>
+      <div style="margin-top:6px">v1.0.1 · MIT-like free tier · © 2026 liuxing5</div>
+      <div>本页下方含完整隐私政策 / Full privacy policy served on this page ↓</div>
+    </div>
+    <div>
+      <div style="margin-bottom:6px"><a href="#demo">演示 Demo</a> · <a href="#features">功能</a> · <a href="#install">安装</a> · <a href="#privacy">隐私政策</a></div>
+      <div style="margin-bottom:6px"><a href="https://github.com/liuxing5/web-crawler-ext" target="_blank" rel="noopener">GitHub 仓库</a> · <a href="https://github.com/liuxing5" target="_blank" rel="noopener">作者 GitHub</a></div>
+      <div><a href="https://chromewebstore.google.com/detail/web-crawler-%E7%BD%91%E7%BB%9C%E7%88%AC%E8%99%AB%E8%9E%8D%E8%99%84/aehfejcbddngnffjhcomphkkommlgogo" target="_blank" rel="noopener">Chrome 商店</a> · Edge（审核中）· Firefox（审核中）</div>
+    </div>
+  </div>
+</footer>
+
 </body>
 </html>
